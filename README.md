@@ -1,2 +1,2 @@
 # unit-4-game
-RPG game with jQuery
+Simple RPG game built with jQuery
