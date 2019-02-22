@@ -32,13 +32,33 @@ $.getJSON("config.json",function(data){Characters = data});
 class Character{
     constructor(ch){
         if (typeof Characters[ch]!== "undefined"){
-            this.character = Characters[ch];
+            let c= Characters[ch];
+            this.name = c.name;
+            this.displayName = c.displayName
+            this.hp = c.hp;
+            this.attack = c.attack;
+            this.counterAttack = c.counterAttack
+            
+            // console.log(this,"created");
         }
         else{
             console.error("invalid charactor: " + ch);
         }
     }
-    attack(ch) {
+    doAttack(enemy) {
+        enemy.attacked(this.attack);
+
+        this.hp -= enemy.counterAttack;
+        this.attack = this.attack*2;
         
+        // return message;
+    }
+
+    attacked(damage){
+        this.hp -= damage;
+    }
+
+    isDead(){
+        return this.hp<=0;
     }
 }

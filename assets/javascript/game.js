@@ -1,5 +1,5 @@
 var charactors = [];
-var myCharactor,currentEnemy;
+var myCharactor,currentEnemy = null;
 
 $(document).ready(function (){
     //get all characters from config file
@@ -15,15 +15,47 @@ $(document).ready(function (){
 });
 
 function attackCurrentEnemy(){
-    if(typeof currentEnemy !== "undefined"){
-        
+    if( currentEnemy == null ||  myCharactor === null){
+        alert("please select charactors first!"); 
     }else{
-        alert("please select charactors first!");
+        $("#attackResult").empty();
+        let p1 = $("<p>");
+        let p2 = $("<p>");
+        let message = "You Attacked " + currentEnemy.displayName + " for " + myCharactor.attack + " damage." 
+        p1.text(message)
+        $("#attackResult").append(p1);
+        console.log("1:",message);
+        message = currentEnemy.displayName + " Attacked you back " + " for " + currentEnemy.attack + " damage." 
+        p2.text(message)
+        console.log("2:",message);
+        $("#attackResult").append(p2);
+
+        myCharactor.doAttack(currentEnemy);
+         console.log("curent enemy: ",currentEnemy.name);
+        //console.log(myCharactor.hp);
+        //console.log(currentEnemy.hp);
+        if(myCharactor.isDead()){
+            alert("you died");
+        }else if(currentEnemy.isDead()){
+            alert("enemy died");
+            removeCurrentEnemy();
+        }
     }
 }
 
-
-
+//TODO
+function removeCurrentEnemy(){
+    // console.log(charactors);
+    $("#"+currentEnemy.name).remove();
+    $("#attackResult").empty();
+    currentEnemy=null;
+    // console.log(charactors);
+    charactors.forEach(function(each){
+        // console.log(each);
+        $("#"+each).on("click",this,selectNewEnemy);
+    });
+    
+}
 
 
 
@@ -32,6 +64,7 @@ function selectNewEnemy(event){
     console.log(cardId, "is enemy!");
     currentEnemy = new Character(cardId);
     moveCardToDiv(cardId,$("#defender"));
+    $("#"+cardId).children(".card").attr("class",$("#"+cardId).children(".card").attr("class")+" text-light bg-dark");
     //unbind the rest
     charactors.splice(charactors.indexOf(cardId),1);
     charactors.forEach(function(each){
