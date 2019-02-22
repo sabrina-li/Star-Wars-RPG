@@ -9,6 +9,7 @@ $(document).ready(function (){
 });
 
 function runtest(){
+    console.log("test starting to run here")
     $("#obiwan").click(); 
     $("#luke").click(); 
     // $("#sidious").click(); 
