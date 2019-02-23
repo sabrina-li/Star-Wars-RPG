@@ -1,7 +1,7 @@
 var charactors = [];
 var myCharactor,currentEnemy = null;
 
-$(document).ready(function (){
+$(document).ready(function (){    
     //get all characters from config file
     $.getJSON("config.json",function(ch){
         $.each(ch,function(key){
@@ -9,8 +9,14 @@ $(document).ready(function (){
         })
     });
     console.log("list of charactors loaded:",charactors);
-    $(".charactorList").on("click",this,moveCharactersOnMySelect);
+
+//TODO dynamically create the cards for the charactores
+
+    $(".charactorList").on("click",moveCharactersOnMySelect);
     $("#attackButton").on("click",attackCurrentEnemy);
+
+
+
 
 });
 
@@ -31,9 +37,11 @@ function attackCurrentEnemy(){
         $("#attackResult").append(p2);
 
         myCharactor.doAttack(currentEnemy);
-         console.log("curent enemy: ",currentEnemy.name);
-        //console.log(myCharactor.hp);
-        //console.log(currentEnemy.hp);
+        updateHP(myCharactor);
+        updateHP(currentEnemy);
+        console.log("curent enemy: ",currentEnemy.name);
+
+        //TODO
         if(myCharactor.isDead()){
             alert("you died");
         }else if(currentEnemy.isDead()){
@@ -43,24 +51,30 @@ function attackCurrentEnemy(){
     }
 }
 
-//TODO
+function updateHP(charater){
+    
+    $("#"+charater.name).children(".card").children(".card-text").text(charater.hp);
+       
+}
+
+
 function removeCurrentEnemy(){
     // console.log(charactors);
     $("#"+currentEnemy.name).remove();
-    $("#attackResult").empty();
+    $("#attackResult").text("You've won this round! Click to select your next Enemy!");
     currentEnemy=null;
     // console.log(charactors);
     charactors.forEach(function(each){
         // console.log(each);
-        $("#"+each).on("click",this,selectNewEnemy);
+        $("#"+each).on("click",selectNewEnemy);
     });
     
 }
 
 
-
-function selectNewEnemy(event){
-    let cardId = ($(event.currentTarget).attr("id"));
+//TODO vefiry without event
+function selectNewEnemy(){
+    let cardId = $(this).attr("id");
     console.log(cardId, "is enemy!");
     currentEnemy = new Character(cardId);
     moveCardToDiv(cardId,$("#defender"));
@@ -73,8 +87,9 @@ function selectNewEnemy(event){
 }
 
 
-function moveCharactersOnMySelect(event){
-    let cardId = ($(event.currentTarget).attr("id"));
+function moveCharactersOnMySelect(){
+    console.log(this);
+    let cardId = $(this).attr("id");
     console.log(cardId, "clicked!");
     myCharactor = new Character(cardId);
     setMyCharactorAndMoveOthers(cardId);
@@ -92,7 +107,7 @@ function setMyCharactorAndMoveOthers(cardId){
         //changeBackgroundColor(card,color);
         $("#"+each).children(".card").attr("class",$("#"+each).children(".card").attr("class")+" bg-danger");
         //old onclick has been unbinded, then bind new onclick func
-        $("#"+each).on("click",this,selectNewEnemy);
+        $("#"+each).on("click",selectNewEnemy);
     })
 }
 

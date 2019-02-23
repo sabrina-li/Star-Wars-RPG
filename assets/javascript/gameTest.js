@@ -20,6 +20,12 @@ $(document).ready(function (){
         function() {
           runtest();
     }, 2500);
+    for (let i=0;i<3;i++){
+        setTimeout(
+            function() {
+                clickbutton();
+        }, 3000);
+    }
     
 
 

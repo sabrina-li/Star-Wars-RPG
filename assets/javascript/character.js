@@ -47,7 +47,6 @@ class Character{
     }
     doAttack(enemy) {
         enemy.attacked(this.attack);
-
         this.hp -= enemy.counterAttack;
         this.attack = this.attack*2;
         
