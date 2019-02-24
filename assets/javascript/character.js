@@ -36,20 +36,24 @@ class Character{
             this.name = c.name;
             this.displayName = c.displayName
             this.hp = c.hp;
-            this.attack = c.attack;
+            this.attack = c.baseAttack;
+            this.baseAttack = c.baseAttack;
             this.counterAttack = c.counterAttack
             
-            // console.log(this,"created");
+             console.log(this.counterAttack,"created");
         }
         else{
             console.error("invalid charactor: " + ch);
         }
     }
     doAttack(enemy) {
+        // console.log(this.baseAttack);
+        // console.log(this.attack);
         enemy.attacked(this.attack);
-        this.hp -= enemy.counterAttack;
-        this.attack = this.attack*2;
-        
+        this.attack += this.baseAttack;
+        if (enemy.hp >=0){
+            this.hp -= enemy.counterAttack;
+        }
         // return message;
     }
 

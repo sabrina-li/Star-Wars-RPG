@@ -10,22 +10,22 @@ $(document).ready(function (){
               clickbutton();
         }, 1500);
     }
-    for (let i=0;i<1;i++){
-        setTimeout(
-            function() {
-              clickbutton();
-        }, 2000);
-    }
-    setTimeout(
-        function() {
-          runtest();
-    }, 2500);
-    for (let i=0;i<3;i++){
-        setTimeout(
-            function() {
-                clickbutton();
-        }, 3000);
-    }
+    // for (let i=0;i<1;i++){
+    //     setTimeout(
+    //         function() {
+    //           clickbutton();
+    //     }, 3000);
+    // }
+    // setTimeout(
+    //     function() {
+    //       runtest();
+    // }, 3500);
+    // for (let i=0;i<3;i++){
+    //     setTimeout(
+    //         function() {
+    //             clickbutton();
+    //     }, 4000);
+    // }
     
 
 
@@ -34,10 +34,14 @@ $(document).ready(function (){
 
 function runtest(){
     console.log("test starting to run here")
-    $("#obiwan").click(); 
     $("#luke").click(); 
-    //$("#sidious").click(); 
+    // $("#obiwan").click();
+    // $("#sidious").click(); 
     $("#maul").click(); 
+     
+    // 
+    // 
+    
 }
 
 function clickbutton(){
