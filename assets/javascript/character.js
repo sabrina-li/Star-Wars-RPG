@@ -40,7 +40,7 @@ class Character{
             this.baseAttack = c.baseAttack;
             this.counterAttack = c.counterAttack
             
-             console.log(this.counterAttack,"created");
+            //  console.log(this.counterAttack,"created");
         }
         else{
             console.error("invalid charactor: " + ch);

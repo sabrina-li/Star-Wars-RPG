@@ -14,6 +14,7 @@ function init(){
     charactors = [];
     charactorsObj = [];
     myCharactor,currentEnemy = null;
+    $("#attackResult").empty();
     $.getJSON("config.json",function(ch){
         $.each(ch,function(key){
             // console.log(key);
@@ -56,7 +57,7 @@ function attackCurrentEnemy(){
         myCharactor.doAttack(currentEnemy);
         updateHP(myCharactor);
         
-        console.log("curent enemy: ",currentEnemy.name);
+        // console.log("curent enemy: ",currentEnemy.name);
 
         
         if(myCharactor.isDead()){
@@ -66,6 +67,7 @@ function attackCurrentEnemy(){
             $("#attackButton").off();
             let restartBtn = $("<br><button>");
             restartBtn.text("Restart");
+            restartBtn.attr("id","restartBtn");
             $("#attackResult").append(restartBtn);
             // init();
             restartBtn.click(init);
@@ -124,7 +126,6 @@ function selectNewEnemy(){
 
 
 function moveCharactersOnMySelect(){
-    console.log("someting clicked");
     let cardId = $(this).attr("id");
     console.log(cardId, "clicked!");
     myCharactor = new Character(cardId);
