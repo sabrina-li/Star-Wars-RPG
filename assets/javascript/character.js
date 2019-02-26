@@ -39,13 +39,51 @@ class Character{
             this.attack = c.baseAttack;
             this.baseAttack = c.baseAttack;
             this.counterAttack = c.counterAttack
-            
-            //  console.log(this.counterAttack,"created");
+            this.imgUrl = c.imgUrl;
+            //console.log(this.counterAttack,"created");
         }
         else{
             console.error("invalid charactor: " + ch);
         }
     }
+
+    buildCard(){
+        let outerDiv =  $("<div>");
+        let cardDiv = $("<div>");
+        let card = $("<div>");
+        let pTitle = $("<p>");
+        let img = $("<img>");
+        let pText = $("<p>");
+
+        cardDiv.attr("id",this.name);
+        cardDiv.addClass("float-left charactorCard");
+        
+        
+        card.addClass("card text-center");
+        
+        pTitle.addClass("card-title");
+        pTitle.text(this.displayName);
+        
+        img.addClass("card-img-top");
+        img.attr("src",this.imgUrl);
+        img.attr("alt",this.displayName);
+        
+        pText.addClass("card-text");
+        pText.text(this.hp);
+
+        card.append(pTitle);
+        card.append(img);
+        card.append(pText);
+        cardDiv.append(card);
+        outerDiv.append(cardDiv);
+
+        // console.log("inside obj:",cardDiv[0].outerHTML);
+
+        return outerDiv;
+    }
+
+
+
     doAttack(enemy) {
         // console.log(this.baseAttack);
         // console.log(this.attack);

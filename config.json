@@ -4,28 +4,32 @@
                      "displayName":"Obi-Wan Kenobi",
                      "hp":120,
                      "baseAttack":8,
-                     "counterAttack":15
+                     "counterAttack":15,
+                     "imgUrl":"assets/images/obiwan.png"
     },
     "luke": {
                     "name":"luke",
                     "displayName":"Luke Skywalker",
                     "hp":100,
                     "baseAttack":15,
-                    "counterAttack":5
+                    "counterAttack":5,
+                    "imgUrl":"assets/images/luke.png"
                 },
     "sidious":{
                     "name":"sidious",
                     "displayName":"Darth Sidious",
                     "hp":150,
                     "baseAttack":6,
-                    "counterAttack":20
+                    "counterAttack":20,
+                    "imgUrl":"assets/images/sidious.jpg"
                 },
     "maul":{
                     "name":"maul",
                     "displayName":"Darth Maul",
                     "hp":180,
                     "baseAttack":4,
-                    "counterAttack":25
+                    "counterAttack":25,
+                    "imgUrl":"assets/images/maul.jpg"
                 }
 
 }

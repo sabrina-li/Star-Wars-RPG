@@ -29,13 +29,22 @@ function init(){
 }
 
 function resetUI(){
-     console.log(charactors);
     $.each(charactors,function(idx,value){
-        $("#"+value).css("display","initial");
-        moveCardToDiv(value,".charactorList");
-        $("#"+value).children(".card").css({"background":"#F8F9FA","color":"#343A40"});
-        updateHP(charactorsObj[idx]);
+        // $("#"+value).css("display","initial");
+        // moveCardToDiv(value,".charactorList");
+        // $("#"+value).children(".card").css({"background":"#F8F9FA","color":"#343A40"});
+        // updateHP(charactorsObj[idx]);
+         $("#"+value).remove();
     })
+    
+    $.each(charactorsObj,function(idx,value){
+        
+        let mydiv = value.buildCard();
+        // console.log($(".charactorList"));
+        console.log(mydiv.html());
+        $("#charactorList").append(mydiv.html());
+    });
+    
     
 }
 
