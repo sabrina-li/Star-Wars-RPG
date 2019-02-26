@@ -52,14 +52,12 @@ $(document).ready(function (){
 
     setTimeout(
         function() {
-
           runtest2();
     }, 6500);
     
-    for (let i=0;i<4;i++){
+    for (let i=0;i<5;i++){
         setTimeout(
             function() {
-   
               clickbutton();
         }, 7000);
     }

@@ -31,6 +31,7 @@ function init(){
 function resetUI(){
      console.log(charactors);
     $.each(charactors,function(idx,value){
+        $("#"+value).css("display","initial");
         moveCardToDiv(value,".charactorList");
         $("#"+value).children(".card").css({"background":"#F8F9FA","color":"#343A40"});
         updateHP(charactorsObj[idx]);
@@ -63,14 +64,9 @@ function attackCurrentEnemy(){
         if(myCharactor.isDead()){
             alert("you died");
             console.log("you died!!");
-            $("#attackResult").text("You've been defeated... GAME OVER!");
+            $("#attackResult").text("You've been defeated... game over!");
             $("#attackButton").off();
-            let restartBtn = $("<br><button>");
-            restartBtn.text("Restart");
-            restartBtn.attr("id","restartBtn");
-            $("#attackResult").append(restartBtn);
-            // init();
-            restartBtn.click(init);
+            addRestartButton();
             //update the text and restart button appear
         }else if(currentEnemy.isDead()){
             alert("enemy died");
@@ -81,6 +77,15 @@ function attackCurrentEnemy(){
     }
 }
 
+function addRestartButton(){
+    console.log("adding restart button");
+    let restartBtn = $("<br><button>");
+    restartBtn.text("Restart");
+    restartBtn.attr("id","restartBtn");
+    $("#attackResult").append(restartBtn);
+    // init();
+    restartBtn.click(init);
+}
 function updateHP(charater){
     $("#"+charater.name).children(".card").children(".card-text").text(charater.hp);
        
@@ -89,11 +94,11 @@ function updateHP(charater){
 
 function removeCurrentEnemy(){
     // console.log(charactors);
-    $("#"+currentEnemy.name).remove();
+    $("#"+currentEnemy.name).css("display","none");
     // console.log("enemies left: ",charactors);
     if (charactors.length===0){
-        $("#attackResult").text("You've won!! GAME OVER!");
-        //TODO:add restart button
+        $("#attackResult").text("You've won!! game over!");
+        addRestartButton();
         
     }else{
         $("#attackResult").text("You've defeated "+ currentEnemy.displayName + "! You can choost to fight another enemy!");
