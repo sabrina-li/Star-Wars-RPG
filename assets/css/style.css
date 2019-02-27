@@ -4,14 +4,12 @@
 }
 
 
-
- header, h3, h4, p{
-    margin-bottom:0;
+header, h3, h4, p{
     font-family: 'Star Jedi';
 }
 
 
-p, .card-title, .card-text{
+p, .card-title, .card-text,#attackResult, .btn{
     font-size: 0.7rem;
     font-family: 'Press Start 2P', cursive;
 }

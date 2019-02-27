@@ -1,25 +1,26 @@
 
-var charactors,charactorsObj = [];
+var charactorsObj = [];
 var myCharactor,currentEnemy = null;
 
 
 $(document).ready(function (){    
-    //get all characters from config file and put cards in UI
     init();
 
 });
 
+
+//get all characters from config file and put cards in UI
 function init(){
-    //TODO dynamically create the cards for the charactores
-    charactors = [];
+    // charactors = [];
     charactorsObj = [];
     myCharactor,currentEnemy = null;
+
     $("#attackResult").empty();
+
     $.getJSON("config.json",function(ch){
         $.each(ch,function(key){
-            // console.log(key);
             charactorsObj.push(new Character(key));
-            charactors.push(key);
+            // charactors.push(key);
         });
         resetUI();
         $(".charactorCard").on("click",moveCharactersOnMySelect);
@@ -29,25 +30,58 @@ function init(){
 }
 
 function resetUI(){
-    $.each(charactors,function(idx,value){
-        // $("#"+value).css("display","initial");
-        // moveCardToDiv(value,".charactorList");
-        // $("#"+value).children(".card").css({"background":"#F8F9FA","color":"#343A40"});
-        // updateHP(charactorsObj[idx]);
-         $("#"+value).remove();
-    })
-    
     $.each(charactorsObj,function(idx,value){
-        
+        //remove card from previous and add new ones
+        $("#"+value.name).remove();
         let mydiv = value.buildCard();
-        // console.log($(".charactorList"));
         console.log(mydiv.html());
         $("#charactorList").append(mydiv.html());
     });
-    
-    
 }
 
+
+function moveCharactersOnMySelect(){
+    let cardId = $(this).attr("id");
+    console.log(cardId, "clicked!");
+    setMyCharactorAndMoveOthers(cardId);
+}
+
+//move my selection to my character,  and all other to enemy
+function setMyCharactorAndMoveOthers(cardId){
+    moveCardToDiv(cardId,"#myCharacter");
+    $.each(charactorsObj,function(idx,value){
+        if(value.name !== cardId){
+            moveCardToDiv(value.name,"#enemies");
+            //change card to red once moved to enemy section
+            $("#"+value.name).children(".card").css("background","#DB3545");
+            //old onclick has been unbinded, then bind new onclick func
+            $("#"+value.name).on("click",selectNewEnemy);
+        }else{
+            myCharactor = value;
+        }
+    });
+}
+
+//new enemy clicked, update ui for new enemy
+function selectNewEnemy(){
+    let cardId = $(this).attr("id");
+    console.log(cardId, "is enemy!");
+    
+    console.log( charactorsObj);
+    moveCardToDiv(cardId,"#defender");
+    //change background to black for defender
+    $("#"+cardId).children(".card").css({"background":"#343A40","color":"#F8F9FA"});
+    //unbind the rest to disable clicking
+    $.each(charactorsObj,function(idx,value){
+        $("#"+value.name).off();
+        if(value.name == cardId){
+            currentEnemy = value;
+        }
+    })
+    $("#attackResult").empty();
+}
+
+//one round of attach and determin win/lose
 function attackCurrentEnemy(){
     if( currentEnemy == null ||  myCharactor === null){
         alert("please select charactors first!"); 
@@ -59,108 +93,61 @@ function attackCurrentEnemy(){
         p1.text(message)
         $("#attackResult").append(p1);
         console.log("1:",message);
-        message = currentEnemy.displayName + " Attacked you back " + " for " + currentEnemy.counterAttack + " damage." 
+        message = currentEnemy.displayName + " attacked you back " + " for " + currentEnemy.counterAttack + " damage." 
         p2.text(message)
         console.log("2:",message);
         $("#attackResult").append(p2);
 
         myCharactor.doAttack(currentEnemy);
         updateHP(myCharactor);
-        
-        // console.log("curent enemy: ",currentEnemy.name);
-
+        updateHP(currentEnemy);
         
         if(myCharactor.isDead()){
+            //update the text and restart button appear
             alert("you died");
-            console.log("you died!!");
             $("#attackResult").text("You've been defeated... game over!");
             $("#attackButton").off();
             addRestartButton();
-            //update the text and restart button appear
         }else if(currentEnemy.isDead()){
             alert("enemy died");
             removeCurrentEnemy();
-        }else{
-            updateHP(currentEnemy);
         }
     }
 }
 
+//call update hp after each round
+function updateHP(charater){
+    $("#"+charater.name).children(".card").children(".card-text").text(charater.hp);
+}
+
+
 function addRestartButton(){
-    console.log("adding restart button");
     let restartBtn = $("<br><button>");
     restartBtn.text("Restart");
     restartBtn.attr("id","restartBtn");
+    restartBtn.addClass("btn btn-danger");
     $("#attackResult").append(restartBtn);
-    // init();
     restartBtn.click(init);
 }
-function updateHP(charater){
-    $("#"+charater.name).children(".card").children(".card-text").text(charater.hp);
-       
-}
 
-
+//current enemy died
 function removeCurrentEnemy(){
-    // console.log(charactors);
-    $("#"+currentEnemy.name).css("display","none");
-    // console.log("enemies left: ",charactors);
-    if (charactors.length===0){
+    $("#"+currentEnemy.name).remove();
+    console.log($("#enemies"));
+    if($("#enemies").is(":empty")){
         $("#attackResult").text("You've won!! game over!");
-        addRestartButton();
-        
+        addRestartButton();        
     }else{
-        $("#attackResult").text("You've defeated "+ currentEnemy.displayName + "! You can choost to fight another enemy!");
+        $("#attackResult").text("You've defeated "+ currentEnemy.displayName + "! You can choose to fight another enemy!");
         currentEnemy=null;
-        // console.log(charactors);
-        charactors.forEach(function(each){
-            // console.log(each);
-            $("#"+each).on("click",selectNewEnemy);
-        });
+        $.each(charactorsObj,function(idx,value){
+            if (value.name!==myCharactor.name){
+                $("#"+value.name).on("click",selectNewEnemy);
             }
-
-    
+        });
+    }
 }
 
-
-
-function selectNewEnemy(){
-    let cardId = $(this).attr("id");
-    console.log(cardId, "is enemy!");
-    currentEnemy = new Character(cardId);
-    moveCardToDiv(cardId,"#defender");
-    $("#"+cardId).children(".card").css({"background":"#343A40","color":"#F8F9FA"});
-    //unbind the rest to disable clicking
-    charactors.splice(charactors.indexOf(cardId),1);
-    charactors.forEach(function(each){
-        moveCardToDiv(each,"#enemies");
-    })
-    $("#attackResult").empty();
-}
-
-
-function moveCharactersOnMySelect(){
-    let cardId = $(this).attr("id");
-    console.log(cardId, "clicked!");
-    myCharactor = new Character(cardId);
-    setMyCharactorAndMoveOthers(cardId);
-
-}
-
-function setMyCharactorAndMoveOthers(cardId){
-    
-    moveCardToDiv(cardId,"#myCharacter");
-
-    charactors.splice(charactors.indexOf(cardId),1);
-    charactors.forEach(function(each){
-        moveCardToDiv(each,"#enemies");
-        //change card to danger once moved to enemy section
-        //changeBackgroundColor(card,color);
-        $("#"+each).children(".card").css("background","#DB3545");
-        //old onclick has been unbinded, then bind new onclick func
-        $("#"+each).on("click",selectNewEnemy);
-    })
-}
 
 function moveCardToDiv(cardId,divId){
     let card = $('#'+cardId);

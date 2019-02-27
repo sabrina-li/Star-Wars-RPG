@@ -85,8 +85,8 @@ class Character{
 
 
     doAttack(enemy) {
-        // console.log(this.baseAttack);
-        // console.log(this.attack);
+        //this attack enemy first, then enemy attacl
+        //if enemy dies, does not conterattackm, round ends
         enemy.attacked(this.attack);
         this.attack += this.baseAttack;
         if (enemy.hp >=0){
