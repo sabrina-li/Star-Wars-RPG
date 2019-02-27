@@ -23,7 +23,9 @@ function init(){
             // charactors.push(key);
         });
         resetUI();
+        
         $(".charactorCard").on("click",moveCharactersOnMySelect);
+        $(".charactorCard").addClass("charactorCardHover");
         $("#attackButton").on("click",attackCurrentEnemy);
     });
     console.log("list of charactors loaded:",charactorsObj);
@@ -57,6 +59,7 @@ function setMyCharactorAndMoveOthers(cardId){
             $("#"+value.name).children(".card").css({"background":"#DB3545","color":"#F8F9FA"});
             //old onclick has been unbinded, then bind new onclick func
             $("#"+value.name).on("click",selectNewEnemy);
+            $("#"+value.name).addClass("charactorCardHover");
         }else{
             myCharactor = value;
         }
@@ -75,6 +78,7 @@ function selectNewEnemy(){
     //unbind the rest to disable clicking
     $.each(charactorsObj,function(idx,value){
         $("#"+value.name).off();
+        $("#"+value.name).removeClass("charactorCardHover");
         if(value.name == cardId){
             currentEnemy = value;
         }
@@ -146,6 +150,7 @@ function removeCurrentEnemy(){
         $.each(charactorsObj,function(idx,value){
             if (value.name!==myCharactor.name){
                 $("#"+value.name).on("click",selectNewEnemy);
+                $("#"+value.name).addClass("charactorCardHover");
             }
         });
     }
@@ -157,4 +162,5 @@ function moveCardToDiv(cardId,divId){
     let div = $(divId);
     div.append(card);
     card.off();
+    card.removeClass("charactorCardHover");
 }
