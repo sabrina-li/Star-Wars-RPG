@@ -34,7 +34,7 @@ function resetUI(){
         //remove card from previous and add new ones
         $("#"+value.name).remove();
         let mydiv = value.buildCard();
-        console.log(mydiv.html());
+        //console.log(mydiv.html());
         $("#charactorList").append(mydiv.html());
     });
 }
@@ -67,7 +67,7 @@ function selectNewEnemy(){
     let cardId = $(this).attr("id");
     console.log(cardId, "is enemy!");
     
-    console.log( charactorsObj);
+    // console.log( charactorsObj);
     moveCardToDiv(cardId,"#defender");
     //change background to black for defender
     $("#"+cardId).children(".card").css({"background":"#343A40","color":"#F8F9FA"});
@@ -101,6 +101,7 @@ function attackCurrentEnemy(){
         myCharactor.doAttack(currentEnemy);
         updateHP(myCharactor);
         updateHP(currentEnemy);
+        // console.log(currentEnemy.hp);
         
         if(myCharactor.isDead()){
             //update the text and restart button appear
@@ -109,7 +110,7 @@ function attackCurrentEnemy(){
             $("#attackButton").off();
             addRestartButton();
         }else if(currentEnemy.isDead()){
-            alert("enemy died");
+            // alert("enemy died");
             removeCurrentEnemy();
         }
     }
@@ -120,8 +121,9 @@ function updateHP(charater){
     $("#"+charater.name).children(".card").children(".card-text").text(charater.hp);
 }
 
-
+//disable attack button
 function addRestartButton(){
+    $("#attackButton").off();
     let restartBtn = $("<br><button>");
     restartBtn.text("Restart");
     restartBtn.attr("id","restartBtn");
@@ -133,7 +135,7 @@ function addRestartButton(){
 //current enemy died
 function removeCurrentEnemy(){
     $("#"+currentEnemy.name).remove();
-    console.log($("#enemies"));
+    // console.log($("#enemies"));
     if($("#enemies").is(":empty")){
         $("#attackResult").text("You've won!! game over!");
         addRestartButton();        
