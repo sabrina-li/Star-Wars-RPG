@@ -2,10 +2,29 @@
     font-family:'Star Jedi' ;
     src: url('../font/Starjedi.ttf');
 }
+@font-face {
+    font-family:'Star Jhol' ;
+    src: url('../font/Starjhol.ttf');
+}
 
 
-header, h3, h4, p{
+
+html,body{
+    height: 100%;
+    width: 100%;
+    background-image: url('/assets/images/Star-Wars.jpg');
+    background-size: auto 100%;
+    color:#FFC537;
+}
+
+h4, p{
     font-family: 'Star Jedi';
+}
+
+
+header{
+    margin-right: 25%;
+    font-family: 'Star Jhol';
 }
 
 

@@ -36,6 +36,7 @@ function resetUI(){
         let mydiv = value.buildCard();
         //console.log(mydiv.html());
         $("#charactorList").append(mydiv.html());
+        $("#"+value.name).children(".card").css({"background":"#F8F9FA","color":"#343A40"});
     });
 }
 
@@ -53,7 +54,7 @@ function setMyCharactorAndMoveOthers(cardId){
         if(value.name !== cardId){
             moveCardToDiv(value.name,"#enemies");
             //change card to red once moved to enemy section
-            $("#"+value.name).children(".card").css("background","#DB3545");
+            $("#"+value.name).children(".card").css({"background":"#DB3545","color":"#F8F9FA"});
             //old onclick has been unbinded, then bind new onclick func
             $("#"+value.name).on("click",selectNewEnemy);
         }else{
