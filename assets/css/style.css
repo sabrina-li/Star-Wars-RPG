@@ -12,7 +12,7 @@
 html,body{
     height: 100%;
     width: 100%;
-    background-image: url('/assets/images/Star-Wars.jpg');
+    background-image: url('../images/Star-Wars.jpg');
     background-size: auto 100%;
     color:#FFC537;
 }
