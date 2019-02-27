@@ -1,4 +1,4 @@
-# unit-4-game
+# unit-4-game: Star Wars RPG
 Star Wars RPG game built with jQuery
 
 ### How to play
