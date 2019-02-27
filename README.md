@@ -1,5 +1,5 @@
 # unit-4-game: Star Wars RPG
-Star Wars RPG game built with jQuery
+Star Wars RPG game built with jQuery. Hosted: https://sabrina-li.github.io/Star-Wars-RPG/
 
 ### How to play
 
