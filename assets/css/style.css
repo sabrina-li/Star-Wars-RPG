@@ -35,3 +35,15 @@ p, .card-title, .card-text,#attackResult, .btn{
 .card{
     max-width: 110px;
 }
+
+#charactorList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.charactorCard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.1rem;
+}

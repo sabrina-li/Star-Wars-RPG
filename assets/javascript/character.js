@@ -56,7 +56,8 @@ class Character{
         let pText = $("<p>");
 
         cardDiv.attr("id",this.name);
-        cardDiv.addClass("float-left charactorCard");
+        // cardDiv.addClass("float-left charactorCard");
+        cardDiv.addClass("charactorCard");
         
         
         card.addClass("card text-center");
