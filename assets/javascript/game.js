@@ -2,8 +2,28 @@
 var charactorsObj = [];
 var myCharactor,currentEnemy = null;
 
+var audio;
+$(document).ready(function (){  
+    
+//   console.log("loaded");
+//   var audio = new Audio();
+//   audio.src = "assets/sounds/StarWars.mp3";
+  
+//   var audioPromise = audio.play()
 
-$(document).ready(function (){    
+//   if (typeof audioPromise !== "undefined"){
+//     audioPromise.then(function() {
+//     console.log("Automatic playback started!")
+//   }).catch(function(error) {
+//     console.log( "Automatic playback failed.",error.message)
+//     // Show a UI element to let the user manually start playback.
+//   })
+//     }
+    audio =document.getElementById("myAudio");
+    
+    
+    
+
     init();
 
 });
@@ -44,6 +64,10 @@ function resetUI(){
 
 
 function moveCharactersOnMySelect(){
+    //play music when user click the first card
+    //TODO reasearch into auto play when page loads
+    audio.play();
+
     let cardId = $(this).attr("id");
     console.log(cardId, "clicked!");
     setMyCharactorAndMoveOthers(cardId);
